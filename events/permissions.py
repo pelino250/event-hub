@@ -1,9 +1,11 @@
 from rest_framework import permissions
 
+
 class IsOrganizerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow organizers of an event to edit it.
     """
+
     def has_object_permission(self, request, view, obj):
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.

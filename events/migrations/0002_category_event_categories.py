@@ -6,23 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0001_initial'),
+        ("events", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100, unique=True)),
             ],
             options={
-                'verbose_name_plural': 'Categories',
+                "verbose_name_plural": "Categories",
             },
         ),
         migrations.AddField(
-            model_name='event',
-            name='categories',
-            field=models.ManyToManyField(blank=True, related_name='events', to='events.category'),
+            model_name="event",
+            name="categories",
+            field=models.ManyToManyField(
+                blank=True, related_name="events", to="events.category"
+            ),
         ),
     ]
