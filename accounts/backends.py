@@ -3,10 +3,12 @@ from django.contrib.auth.backends import ModelBackend
 
 User = get_user_model()
 
+
 class EmailBackend(ModelBackend):
     """
     Custom authentication backend that allows users to authenticate with their email.
     """
+
     def authenticate(self, request, email=None, password=None, **kwargs):
         try:
             user = User.objects.get(email=email)

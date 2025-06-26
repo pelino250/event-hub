@@ -8,20 +8,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0002_category_event_categories'),
+        ("events", "0002_category_event_categories"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='event_images/'),
+            model_name="event",
+            name="image",
+            field=models.ImageField(blank=True, null=True, upload_to="event_images/"),
         ),
         migrations.AddField(
-            model_name='event',
-            name='organizer',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='events', to=settings.AUTH_USER_MODEL),
+            model_name="event",
+            name="organizer",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="events",
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
     ]
