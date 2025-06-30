@@ -62,8 +62,8 @@ def test_list_events_authenticated(api_client, regular_user, event_data, another
     """
     Test that an authenticated user can list events.
     """
-    api_client.force_authenticate(user=regular_user) # Authenticate the client
-    url = reverse('event-list-create') # 'event-list-create' is a common name for ListCreateAPIView via DRF routers
+    api_client.force_authenticate(user=regular_user) 
+    url = reverse('event-list-create') 
 
     response = api_client.get(url)
 
