@@ -43,3 +43,13 @@ ENV/
 # OS specific
 .DS_Store
 Thumbs.db
+# ...existing content...
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
