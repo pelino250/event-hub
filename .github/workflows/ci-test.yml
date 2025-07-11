@@ -1,0 +1,35 @@
+YAML
+name: 'Build and Test'
+# Run this workflow on every push and pull request to the main and develop
+branches
+on:
+push:
+branches:
+- main
+- develop
+pull_request:
+branches:
+- main
+- develop
+jobs:
+test:
+name: 'Run Tests with Coverage'
+runs-on: ubuntu-latest
+steps:
+- name: Checkout repository
+uses: actions/checkout@v4
+- name: Set up Python
+uses: actions/setup-python@v5
+with:
+python-version: '3.12'
+- name: Install dependencies
+run: |
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+- name: Run tests with coverage
+run: pytest
+- name: Upload coverage report to Codecov
+uses: codecov/codecov-action@v3
+with:
+file: ./coverage.xml
+fail_ci_if_error: false
