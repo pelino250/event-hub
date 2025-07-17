@@ -1,44 +1,25 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
-LABEL authors="Pelin"
-
-# Set Environment Variables
-ENV PYTHONUNBUFFERED=1
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=eventhub.settings
 
-# Create non-root user for security
-RUN groupadd -r appuser && useradd -r -g appuser appuser
-
-# Set the working directory
+# Set work directory
 WORKDIR /app
 
 # Install dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    build-essential \
-    libpq-dev \
-    python3-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy requirements first for better layer caching
-COPY requirements.txt .
+# Copy project
+COPY . /app/
 
-# Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Run collectstatic (for production)
+RUN python manage.py collectstatic --noinput
 
-# Copy the application code
-COPY . .
-
-# Change ownership to non-root user
-RUN chown -R appuser:appuser /app
-
-# Switch to non-root user
-USER appuser
-
-# Expose the port the app runs on
+# Expose port
 EXPOSE 8000
 
-# Use proper entrypoint for Python app
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run the application
+CMD ["gunicorn", "eventhub.wsgi:application", "--bind", "0.0.0.0:8000"]
