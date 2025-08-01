@@ -58,7 +58,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return str(self.email) if self.email is not None else ""
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"

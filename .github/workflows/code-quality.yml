@@ -30,6 +30,9 @@ jobs:
           pip install black flake8 bandit safety
           pip install -r requirements.txt
 
+      - name: Run tests first
+        run: pytest --ds=test_settings
+
       - name: Check code formatting with black
         run: black . --check --diff
 
@@ -43,8 +46,8 @@ jobs:
 
       - name: Checking for vulnerabilities with Safety
         run: safety check --full-report
-        
-        
-      
 
-    
+
+
+
+
